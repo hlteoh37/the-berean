@@ -301,8 +301,10 @@
     </div>
 
     <h3 class="section-title">Previous Answers</h3>
-    <div class="card">
-      <p class="placeholder-text">Previous answers will appear here as questions are asked.</p>
+    <div id="previousAnswers">
+      <div class="card">
+        <p class="placeholder-text">Loading previous answers...</p>
+      </div>
     </div>
 
   </main>
@@ -390,8 +392,31 @@
         .replace(/\n/g, '<br>');
     }
 
-    // Load backend URL on page load
-    loadBackendUrl();
+    async function loadPreviousAnswers() {
+      if (!BEREAN_API) await loadBackendUrl();
+      if (!BEREAN_API) return;
+      try {
+        const resp = await fetch(BEREAN_API + "/api/recent");
+        const data = await resp.json();
+        const container = document.getElementById('previousAnswers');
+        if (!data.questions || data.questions.length === 0) {
+          container.innerHTML = '<div class="card"><p class="placeholder-text">No questions have been asked yet. Be the first!</p></div>';
+          return;
+        }
+        container.innerHTML = data.questions.map(qa => `
+          <div class="card">
+            <h2 style="color:var(--accent2);font-size:1rem;margin-bottom:0.6rem">${qa.question.replace(/</g,'&lt;')}</h2>
+            <div style="line-height:1.8">${formatAnswer(qa.answer)}</div>
+            <p style="color:var(--muted);font-size:0.75rem;margin-top:0.8rem">${qa.timestamp ? new Date(qa.timestamp).toLocaleDateString() : ''}</p>
+          </div>
+        `).join('');
+      } catch (e) {
+        document.getElementById('previousAnswers').innerHTML = '<div class="card"><p class="placeholder-text">Previous answers will appear here as questions are asked.</p></div>';
+      }
+    }
+
+    // Load backend URL and previous answers on page load
+    loadBackendUrl().then(() => loadPreviousAnswers());
 
     // Allow Enter key to submit (Shift+Enter for newline)
     document.getElementById('question').addEventListener('keydown', function(e) {

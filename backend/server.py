@@ -80,6 +80,18 @@ def ask():
     return jsonify({"answer": answer})
 
 
+@app.route("/api/recent", methods=["GET"])
+def recent():
+    """Return recent Q&As for display on the ask page."""
+    log = load_qa_log()
+    # Return last 10, newest first, without IP hashes
+    recent_qas = [
+        {"question": entry["question"], "answer": entry["answer"], "timestamp": entry.get("timestamp", "")}
+        for entry in reversed(log[-10:])
+    ]
+    return jsonify({"questions": recent_qas})
+
+
 @app.route("/api/health", methods=["GET"])
 def health():
     return jsonify({"status": "ok", "name": "The Berean"})
