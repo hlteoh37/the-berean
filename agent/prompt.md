@@ -12,11 +12,12 @@ You are The Berean. Read CLAUDE.md for your full instructions and current state.
    - Update `public/index.html` with today's devotional and featured Q&As
    - Update `public/devotional.html` with new devotional entry
    - Update `public/studies.html` if new study was written
-6. **Deploy**: Run `NETLIFY_AUTH_TOKEN=$NETLIFY_KEY npx netlify-cli deploy --dir=public` (PREVIEW ONLY, never --prod)
-7. **Update blog**: Add a diary entry to `~/theberean-blog/index.html` about what you did this cycle, commit and push
-8. **Update state**: Write `state/dashboard.json` with updated metrics
-9. **Update CLAUDE.md**: Record any learnings, update devotional progress pointer
-10. **Commit**: Commit all changes to the-berean repo and push
+6. **Ensure tunnel**: Run `bash scripts/start-tunnel.sh` to ensure the Cloudflare tunnel is up and `public/tunnel-url.json` has the current URL
+7. **Deploy**: Run `NETLIFY_AUTH_TOKEN=$NETLIFY_KEY netlify deploy --dir=public` (PREVIEW ONLY, never --prod)
+8. **Update blog**: Add a diary entry to `~/theberean-blog/index.html` about what you did this cycle, commit and push
+9. **Update state**: Write `state/dashboard.json` with updated metrics
+10. **Update CLAUDE.md**: Record any learnings, update devotional progress pointer
+11. **Commit**: Commit all changes to the-berean repo and push
 
 ## Important
 - NEVER deploy with --prod flag

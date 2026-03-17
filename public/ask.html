@@ -207,7 +207,6 @@
       border-radius: 10px;
       padding: 2rem;
       line-height: 1.8;
-      white-space: pre-wrap;
     }
 
     .answer-label {
@@ -313,12 +312,31 @@
   </footer>
 
   <script>
-    // Configurable backend URL
-    const BEREAN_API = "http://ec2-34-244-187-222.eu-west-1.compute.amazonaws.com:5001";
+    // Backend URL is read from tunnel-url.json (updated by EC2 tunnel script)
+    let BEREAN_API = "";
+
+    async function loadBackendUrl() {
+      try {
+        const resp = await fetch("tunnel-url.json?t=" + Date.now());
+        const data = await resp.json();
+        BEREAN_API = data.url;
+      } catch (e) {
+        console.error("Could not load backend URL:", e);
+      }
+    }
 
     async function askQuestion() {
       const q = document.getElementById('question').value.trim();
       if (!q) return;
+
+      if (!BEREAN_API) {
+        await loadBackendUrl();
+        if (!BEREAN_API) {
+          document.getElementById('errorMsg').textContent = "The Berean is currently resting. Please try again later.";
+          document.getElementById('errorMsg').style.display = 'block';
+          return;
+        }
+      }
 
       const submitBtn = document.getElementById('submitBtn');
       const loading = document.getElementById('loading');
@@ -340,11 +358,14 @@
         });
 
         if (!response.ok) {
-          throw new Error("The Berean could not process your question. Please try again.");
+          const errData = await response.json().catch(() => ({}));
+          throw new Error(errData.error || "The Berean could not process your question. Please try again.");
         }
 
         const data = await response.json();
-        answerContent.textContent = data.answer || data.response || "No answer was returned.";
+        // Render markdown-like formatting
+        const answer = data.answer || data.response || "No answer was returned.";
+        answerContent.innerHTML = formatAnswer(answer);
         answerArea.style.display = 'block';
       } catch (err) {
         errorMsg.textContent = err.message || "Something went wrong. Please try again.";
@@ -354,6 +375,23 @@
         submitBtn.disabled = false;
       }
     }
+
+    function formatAnswer(text) {
+      // Basic markdown rendering for bold, italic, headers, blockquotes, and line breaks
+      return text
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*(.+?)\*/g, '<em>$1</em>')
+        .replace(/^### (.+)$/gm, '<h4 style="margin:1rem 0 0.5rem;font-family:var(--mono);color:var(--accent2)">$1</h4>')
+        .replace(/^## (.+)$/gm, '<h3 style="margin:1rem 0 0.5rem;font-family:var(--mono);color:var(--accent2)">$1</h3>')
+        .replace(/^&gt; (.+)$/gm, '<blockquote style="border-left:3px solid var(--accent);padding-left:1rem;margin:0.8rem 0;color:var(--muted);font-style:italic">$1</blockquote>')
+        .replace(/^---$/gm, '<hr style="border:none;border-top:1px solid var(--border);margin:1rem 0">')
+        .replace(/\n\n/g, '<br><br>')
+        .replace(/\n/g, '<br>');
+    }
+
+    // Load backend URL on page load
+    loadBackendUrl();
 
     // Allow Enter key to submit (Shift+Enter for newline)
     document.getElementById('question').addEventListener('keydown', function(e) {
