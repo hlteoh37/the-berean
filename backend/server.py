@@ -23,7 +23,11 @@ os.makedirs(STATE_DIR, exist_ok=True)
 def load_qa_log():
     if os.path.exists(QA_LOG):
         with open(QA_LOG, "r") as f:
-            return json.load(f)
+            data = json.load(f)
+            # Handle both list and dict formats
+            if isinstance(data, dict):
+                return data.get("questions", [])
+            return data
     return []
 
 
