@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daily Devotionals — The Berean</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0f0f13;
+      --surface: #1a1a22;
+      --border: #2a2a38;
+      --text: #e0e0f0;
+      --muted: #8888aa;
+      --accent: #7c6af5;
+      --accent2: #5ecfb1;
+      --warn: #f5a623;
+      --danger: #f55353;
+      --success: #4ecb71;
+      --mono: 'JetBrains Mono', 'Fira Code', monospace;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.7;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    a {
+      color: var(--accent2);
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      padding: 2rem 1.5rem 1.5rem;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header h1 {
+      font-family: var(--mono);
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: 0.04em;
+      margin-bottom: 0.3rem;
+    }
+
+    .header .tagline {
+      font-style: italic;
+      color: var(--accent2);
+      font-size: 0.95rem;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      padding: 0.9rem 1.5rem;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav a {
+      font-size: 0.92rem;
+      font-weight: 500;
+    }
+
+    .nav a.active {
+      color: var(--text);
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    .container {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+      flex: 1;
+      width: 100%;
+    }
+
+    .page-title {
+      font-family: var(--mono);
+      font-size: 1.6rem;
+      color: var(--text);
+      margin-bottom: 0.4rem;
+    }
+
+    .page-subtitle {
+      color: var(--muted);
+      font-size: 0.92rem;
+      margin-bottom: 2rem;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .card h2 {
+      font-family: var(--mono);
+      font-size: 1.15rem;
+      color: var(--text);
+      margin-bottom: 0.8rem;
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .devotional-date {
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      color: var(--accent);
+      margin-bottom: 0.4rem;
+    }
+
+    .devotional-passage {
+      font-family: var(--mono);
+      font-size: 0.88rem;
+      color: var(--accent2);
+      margin-bottom: 1rem;
+    }
+
+    .devotional-note {
+      color: var(--text);
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+      line-height: 1.8;
+    }
+
+    .devotional-reflection {
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-style: italic;
+      border-left: 3px solid var(--border);
+      padding-left: 1rem;
+    }
+
+    .placeholder-text {
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-style: italic;
+      padding: 1.5rem 0;
+      text-align: center;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 2rem 1.5rem;
+      border-top: 1px solid var(--border);
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .footer p {
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-style: italic;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 600px) {
+      .header h1 { font-size: 1.6rem; }
+      .card { padding: 1.4rem; }
+      .container { padding: 1.5rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <h1><a href="index.html" style="color: inherit; text-decoration: none;">The Berean</a></h1>
+    <p class="tagline">"Examining the Scriptures daily" (Acts 17:11)</p>
+  </header>
+
+  <nav class="nav">
+    <a href="index.html">Home</a>
+    <a href="ask.html">Ask</a>
+    <a href="devotional.html" class="active">Devotionals</a>
+    <a href="studies.html">Studies</a>
+  </nav>
+
+  <main class="container">
+
+    <h1 class="page-title">Daily Devotionals</h1>
+    <p class="page-subtitle">Walking through Scripture, one passage at a time</p>
+
+    <!-- Devotional entries will be inserted here -->
+    <!-- Each entry follows this structure:
+    <div class="card">
+      <p class="devotional-date">March 17, 2026</p>
+      <p class="devotional-passage">Genesis 1:1–5</p>
+      <p class="devotional-note">Exegetical note content here...</p>
+      <p class="devotional-reflection">Reflection content here...</p>
+    </div>
+    -->
+
+    <div class="card">
+      <p class="placeholder-text">The first devotional is being prepared. Check back soon.</p>
+    </div>
+
+  </main>
+
+  <footer class="footer">
+    <p>Now these Jews were more noble than those in Thessalonica; they received the word with all eagerness, examining the Scriptures daily to see if these things were so. — Acts 17:11 (ESV)</p>
+  </footer>
+
+</body>
+</html>

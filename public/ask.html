@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ask The Berean</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0f0f13;
+      --surface: #1a1a22;
+      --border: #2a2a38;
+      --text: #e0e0f0;
+      --muted: #8888aa;
+      --accent: #7c6af5;
+      --accent2: #5ecfb1;
+      --warn: #f5a623;
+      --danger: #f55353;
+      --success: #4ecb71;
+      --mono: 'JetBrains Mono', 'Fira Code', monospace;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.7;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    a {
+      color: var(--accent2);
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      padding: 2rem 1.5rem 1.5rem;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header h1 {
+      font-family: var(--mono);
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: 0.04em;
+      margin-bottom: 0.3rem;
+    }
+
+    .header .tagline {
+      font-style: italic;
+      color: var(--accent2);
+      font-size: 0.95rem;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      padding: 0.9rem 1.5rem;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav a {
+      font-size: 0.92rem;
+      font-weight: 500;
+    }
+
+    .nav a.active {
+      color: var(--text);
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    .container {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+      flex: 1;
+      width: 100%;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .card h2 {
+      font-family: var(--mono);
+      font-size: 1.15rem;
+      color: var(--text);
+      margin-bottom: 0.8rem;
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .page-title {
+      font-family: var(--mono);
+      font-size: 1.6rem;
+      color: var(--text);
+      margin-bottom: 0.4rem;
+    }
+
+    .page-subtitle {
+      color: var(--muted);
+      font-size: 0.92rem;
+      margin-bottom: 2rem;
+    }
+
+    .question-input {
+      width: 100%;
+      padding: 1rem 1.2rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 1.05rem;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s;
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .question-input:focus {
+      border-color: var(--accent);
+    }
+
+    .submit-btn {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.7rem 2rem;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    .submit-btn:hover {
+      opacity: 0.85;
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .loading {
+      display: none;
+      padding: 1.5rem 0;
+      text-align: center;
+    }
+
+    .loading p {
+      color: var(--accent2);
+      font-style: italic;
+      font-size: 0.95rem;
+    }
+
+    .loading .dots::after {
+      content: '';
+      animation: dots 1.5s steps(4, end) infinite;
+    }
+
+    @keyframes dots {
+      0% { content: ''; }
+      25% { content: '.'; }
+      50% { content: '..'; }
+      75% { content: '...'; }
+    }
+
+    .answer-area {
+      display: none;
+      margin-top: 1.5rem;
+    }
+
+    .answer-area .answer-content {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 2rem;
+      line-height: 1.8;
+      white-space: pre-wrap;
+    }
+
+    .answer-label {
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      color: var(--accent2);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.6rem;
+    }
+
+    .error-msg {
+      color: var(--danger);
+      font-size: 0.9rem;
+      margin-top: 1rem;
+      display: none;
+    }
+
+    .section-title {
+      font-family: var(--mono);
+      font-size: 1.05rem;
+      color: var(--muted);
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .placeholder-text {
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-style: italic;
+      padding: 1.5rem 0;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 2rem 1.5rem;
+      border-top: 1px solid var(--border);
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .footer p {
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-style: italic;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 600px) {
+      .header h1 { font-size: 1.6rem; }
+      .card { padding: 1.4rem; }
+      .container { padding: 1.5rem 1rem; }
+      .question-input { font-size: 0.95rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <h1><a href="index.html" style="color: inherit; text-decoration: none;">The Berean</a></h1>
+    <p class="tagline">"Examining the Scriptures daily" (Acts 17:11)</p>
+  </header>
+
+  <nav class="nav">
+    <a href="index.html">Home</a>
+    <a href="ask.html" class="active">Ask</a>
+    <a href="devotional.html">Devotionals</a>
+    <a href="studies.html">Studies</a>
+  </nav>
+
+  <main class="container">
+
+    <h1 class="page-title">Ask The Berean</h1>
+    <p class="page-subtitle">Bring your Bible questions. Answers are grounded in Scripture, informed by the original Hebrew and Greek.</p>
+
+    <div class="card">
+      <textarea id="question" class="question-input" placeholder="Ask The Berean a Bible question..." rows="3"></textarea>
+      <br>
+      <button class="submit-btn" id="submitBtn" onclick="askQuestion()">Ask</button>
+      <p class="error-msg" id="errorMsg"></p>
+    </div>
+
+    <div class="loading" id="loading">
+      <p>The Berean is examining the Scriptures<span class="dots"></span></p>
+    </div>
+
+    <div class="answer-area" id="answerArea">
+      <p class="answer-label">The Berean's Answer</p>
+      <div class="answer-content" id="answerContent"></div>
+    </div>
+
+    <h3 class="section-title">Previous Answers</h3>
+    <div class="card">
+      <p class="placeholder-text">Previous answers will appear here as questions are asked.</p>
+    </div>
+
+  </main>
+
+  <footer class="footer">
+    <p>Now these Jews were more noble than those in Thessalonica; they received the word with all eagerness, examining the Scriptures daily to see if these things were so. — Acts 17:11 (ESV)</p>
+  </footer>
+
+  <script>
+    // Configurable backend URL
+    const BEREAN_API = "http://localhost:5001";
+
+    async function askQuestion() {
+      const q = document.getElementById('question').value.trim();
+      if (!q) return;
+
+      const submitBtn = document.getElementById('submitBtn');
+      const loading = document.getElementById('loading');
+      const answerArea = document.getElementById('answerArea');
+      const answerContent = document.getElementById('answerContent');
+      const errorMsg = document.getElementById('errorMsg');
+
+      // Reset state
+      submitBtn.disabled = true;
+      errorMsg.style.display = 'none';
+      answerArea.style.display = 'none';
+      loading.style.display = 'block';
+
+      try {
+        const response = await fetch(BEREAN_API + "/api/ask", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ question: q })
+        });
+
+        if (!response.ok) {
+          throw new Error("The Berean could not process your question. Please try again.");
+        }
+
+        const data = await response.json();
+        answerContent.textContent = data.answer || data.response || "No answer was returned.";
+        answerArea.style.display = 'block';
+      } catch (err) {
+        errorMsg.textContent = err.message || "Something went wrong. Please try again.";
+        errorMsg.style.display = 'block';
+      } finally {
+        loading.style.display = 'none';
+        submitBtn.disabled = false;
+      }
+    }
+
+    // Allow Enter key to submit (Shift+Enter for newline)
+    document.getElementById('question').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        askQuestion();
+      }
+    });
+  </script>
+
+</body>
+</html>
