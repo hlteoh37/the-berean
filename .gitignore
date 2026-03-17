@@ -1,0 +1,5 @@
+node_modules/
+.env
+state/logs/
+state/qa-log.json
+.netlify/
