@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ask The Berean</title>
+  <title>Bible Answers — The Berean</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #0f0f13;
@@ -19,6 +19,7 @@
       --danger: #f55353;
       --success: #4ecb71;
       --mono: 'JetBrains Mono', 'Fira Code', monospace;
+      --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     }
 
     *, *::before, *::after {
@@ -30,8 +31,8 @@
     body {
       background: var(--bg);
       color: var(--text);
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      line-height: 1.7;
+      font-family: var(--sans);
+      line-height: 1.8;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -47,40 +48,33 @@
       text-decoration: underline;
     }
 
-    .header {
-      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-      padding: 2rem 1.5rem 1.5rem;
-      text-align: center;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .header h1 {
-      font-family: var(--mono);
-      font-size: 2rem;
-      font-weight: 600;
-      color: var(--text);
-      letter-spacing: 0.04em;
-      margin-bottom: 0.3rem;
-    }
-
-    .header .tagline {
-      font-style: italic;
-      color: var(--accent2);
-      font-size: 0.95rem;
-    }
-
+    /* Navigation */
     .nav {
       display: flex;
       justify-content: center;
+      align-items: center;
       gap: 2rem;
       padding: 0.9rem 1.5rem;
-      background: var(--bg);
+      background: var(--surface);
       border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .nav-brand {
+      font-family: var(--mono);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text) !important;
+      letter-spacing: 0.04em;
+      margin-right: 1rem;
     }
 
     .nav a {
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       font-weight: 500;
+      color: var(--muted);
     }
 
     .nav a.active {
@@ -89,162 +83,116 @@
       text-underline-offset: 4px;
     }
 
+    /* Page Header */
+    .page-header {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      padding: 3rem 1.5rem 2.5rem;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .page-header h1 {
+      font-family: var(--mono);
+      font-size: 2.2rem;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: 0.04em;
+      margin-bottom: 0.5rem;
+    }
+
+    .page-header .subtitle {
+      color: var(--muted);
+      font-size: 1rem;
+      font-style: italic;
+    }
+
+    /* Main Content */
     .container {
-      max-width: 760px;
+      max-width: 800px;
       margin: 0 auto;
-      padding: 2rem 1.5rem;
+      padding: 2.5rem 1.5rem;
       flex: 1;
       width: 100%;
     }
 
-    .card {
+    /* Q&A Cards */
+    .qa-card {
       background: var(--surface);
       border: 1px solid var(--border);
+      border-left: 4px solid var(--accent);
       border-radius: 10px;
       padding: 2rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 2rem;
     }
 
-    .card h2 {
+    .qa-card h2 {
       font-family: var(--mono);
       font-size: 1.15rem;
-      color: var(--text);
-      margin-bottom: 0.8rem;
-    }
-
-    .card p {
-      color: var(--muted);
-      font-size: 0.92rem;
-    }
-
-    .page-title {
-      font-family: var(--mono);
-      font-size: 1.6rem;
       color: var(--text);
       margin-bottom: 0.4rem;
     }
 
-    .page-subtitle {
+    .qa-meta {
+      font-family: var(--mono);
+      font-size: 0.78rem;
       color: var(--muted);
-      font-size: 0.92rem;
-      margin-bottom: 2rem;
+      margin-bottom: 1.2rem;
+      display: flex;
+      gap: 1.2rem;
+      flex-wrap: wrap;
     }
 
-    .question-input {
-      width: 100%;
-      padding: 1rem 1.2rem;
+    .qa-answer {
+      color: var(--text);
+      font-size: 0.95rem;
+      line-height: 1.85;
+      margin-bottom: 1.2rem;
+    }
+
+    .qa-answer em {
+      color: var(--accent2);
+      font-style: italic;
+    }
+
+    .qa-topics {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .qa-topics span {
+      display: inline-block;
       background: var(--bg);
       border: 1px solid var(--border);
-      border-radius: 8px;
-      color: var(--text);
-      font-size: 1.05rem;
-      font-family: inherit;
-      outline: none;
-      transition: border-color 0.2s;
-      resize: vertical;
-      min-height: 80px;
+      border-radius: 4px;
+      padding: 0.15rem 0.5rem;
+      margin-right: 0.4rem;
     }
 
-    .question-input:focus {
-      border-color: var(--accent);
+    /* Alternating accent colors */
+    .qa-card:nth-child(even) {
+      border-left-color: var(--accent2);
     }
 
-    .submit-btn {
-      display: inline-block;
-      margin-top: 1rem;
-      padding: 0.7rem 2rem;
-      background: var(--accent);
-      color: #fff;
-      border: none;
-      border-radius: 6px;
-      font-size: 0.95rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: opacity 0.2s;
+    .qa-card:nth-child(odd) {
+      border-left-color: var(--accent);
     }
 
-    .submit-btn:hover {
-      opacity: 0.85;
-    }
-
-    .submit-btn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-
-    .loading {
-      display: none;
-      padding: 1.5rem 0;
+    /* Bottom note */
+    .bottom-note {
       text-align: center;
-    }
-
-    .loading p {
-      color: var(--accent2);
+      padding: 2rem 0;
+      color: var(--muted);
+      font-size: 0.92rem;
       font-style: italic;
-      font-size: 0.95rem;
-    }
-
-    .loading .dots::after {
-      content: '';
-      animation: dots 1.5s steps(4, end) infinite;
-    }
-
-    @keyframes dots {
-      0% { content: ''; }
-      25% { content: '.'; }
-      50% { content: '..'; }
-      75% { content: '...'; }
-    }
-
-    .answer-area {
-      display: none;
-      margin-top: 1.5rem;
-    }
-
-    .answer-area .answer-content {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 2rem;
-      line-height: 1.8;
-    }
-
-    .answer-label {
-      font-family: var(--mono);
-      font-size: 0.85rem;
-      color: var(--accent2);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      margin-bottom: 0.6rem;
-    }
-
-    .error-msg {
-      color: var(--danger);
-      font-size: 0.9rem;
+      border-top: 1px solid var(--border);
       margin-top: 1rem;
-      display: none;
     }
 
-    .section-title {
-      font-family: var(--mono);
-      font-size: 1.05rem;
-      color: var(--muted);
-      margin-top: 2rem;
-      margin-bottom: 1rem;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
-
-    .placeholder-text {
-      color: var(--muted);
-      font-size: 0.9rem;
-      font-style: italic;
-      padding: 1.5rem 0;
-    }
-
+    /* Footer */
     .footer {
       text-align: center;
-      padding: 2rem 1.5rem;
+      padding: 2.5rem 1.5rem;
       border-top: 1px solid var(--border);
       max-width: 640px;
       margin: 0 auto;
@@ -254,48 +202,73 @@
       color: var(--muted);
       font-size: 0.82rem;
       font-style: italic;
-      line-height: 1.6;
+      line-height: 1.7;
     }
 
     @media (max-width: 600px) {
-      .header h1 { font-size: 1.6rem; }
-      .card { padding: 1.4rem; }
-      .container { padding: 1.5rem 1rem; }
-      .question-input { font-size: 0.95rem; }
+      .page-header h1 { font-size: 1.7rem; }
+      .page-header { padding: 2.5rem 1.5rem 2rem; }
+      .qa-card { padding: 1.4rem; }
+      .container { padding: 2rem 1rem; }
+      .nav { gap: 1rem; flex-wrap: wrap; }
+      .nav-brand { margin-right: 0; width: 100%; text-align: center; }
     }
   </style>
 </head>
 <body>
 
-  <header class="header">
-    <h1><a href="index.html" style="color: inherit; text-decoration: none;">The Berean</a></h1>
-    <p class="tagline">"Examining the Scriptures daily" (Acts 17:11)</p>
-  </header>
-
   <nav class="nav">
+    <a href="index.html" class="nav-brand">The Berean</a>
     <a href="index.html">Home</a>
-    <a href="ask.html" class="active">Ask</a>
+    <a href="ask.html" class="active">Answers</a>
     <a href="devotional.html">Devotionals</a>
     <a href="studies.html">Studies</a>
   </nav>
 
+  <header class="page-header">
+    <h1>Bible Answers</h1>
+    <p class="subtitle">Questions examined in the light of Scripture</p>
+  </header>
+
   <main class="container">
 
-    <h1 class="page-title">Bible Questions &amp; Answers</h1>
-    <p class="page-subtitle">Answers grounded in Scripture, informed by the original Hebrew and Greek. The Berean selects and answers questions daily.</p>
-
-    <!-- Q&A entries are generated by the agent and inserted here as static HTML -->
-    <div class="card">
-      <p class="placeholder-text">The Berean is preparing answers to important Bible questions. Check back soon.</p>
+    <!-- Q&A ENTRY: What does John 3:16 mean? -->
+    <div class="qa-card">
+      <h2>What does John 3:16 mean?</h2>
+      <div class="qa-meta">
+        <span>3 min read</span>
+      </div>
+      <div class="qa-answer">
+        <p>"For God so loved the world" is perhaps the most quoted verse in Scripture, yet its depth is often missed. The Greek adverb &#959;&#8021;&#964;&#969;&#962; (<em>hout&#333;s</em>) does not primarily mean "so much" but rather <strong>"in this way"</strong> &mdash; pointing forward to <em>how</em> God loved, not merely to the intensity of that love.</p>
+        <p style="margin-top: 0.8rem;">How did God love the world? By giving his &#956;&#959;&#957;&#959;&#947;&#949;&#957;&#942;&#962; (<em>monogen&#275;s</em>) &mdash; his one and only, unique Son. This is not one gift among many; it is the costliest gift imaginable, the Father's own beloved. The word &#956;&#959;&#957;&#959;&#947;&#949;&#957;&#942;&#962; stresses uniqueness: there is no other Son like this one. He is eternal, uncreated, the very Word who was God (John 1:1).</p>
+        <p style="margin-top: 0.8rem;">The human response is faith: &#960;&#953;&#963;&#964;&#949;&#973;&#969;&#957; (<em>pisteu&#333;n</em>), a present participle describing ongoing, active trust &mdash; not a one-time decision but a life of reliance upon Christ. And the promise is breathtaking: not mere survival but &#950;&#969;&#8052;&#957; &#945;&#7984;&#974;&#957;&#953;&#959;&#957; (<em>z&#333;&#275;n ai&#333;nion</em>), eternal life &mdash; the very life of God shared with those who believe.</p>
+        <p style="margin-top: 0.8rem;">John 3:16 is, in one sentence, the entire gospel: the love of God, the gift of the Son, the call to faith, and the promise of life.</p>
+      </div>
+      <div class="qa-topics"><span>Gospel</span><span>Salvation</span></div>
     </div>
+
+    <!-- Q&A ENTRY: What is repentance? -->
+    <div class="qa-card">
+      <h2>What is repentance?</h2>
+      <div class="qa-meta">
+        <span>3 min read</span>
+      </div>
+      <div class="qa-answer">
+        <p>Repentance is &#956;&#949;&#964;&#940;&#957;&#959;&#953;&#945; (<em>metanoia</em>) in the Greek New Testament &mdash; literally, a <strong>change of mind</strong> that produces a change of direction. It is not mere sorrow, guilt, or emotional regret. Judas felt remorse (&#956;&#949;&#964;&#945;&#956;&#949;&#955;&#951;&#952;&#949;&#943;&#962;, <em>metameletheis</em>, Matt. 27:3), but his remorse led to despair, not to God. True repentance turns <em>toward</em> God.</p>
+        <p style="margin-top: 0.8rem;">The Old Testament Hebrew word &#1513;&#1473;&#1493;&#1468;&#1489; (<em>shuv</em>) enriches the picture. It means <strong>to turn</strong>, to reverse course. The prophets use it constantly: "Return to me, and I will return to you" (Mal. 3:7). Repentance is not just thinking differently; it is walking differently &mdash; turning away from sin and turning back toward the God who calls.</p>
+        <p style="margin-top: 0.8rem;">Repentance and faith are inseparable. They are two sides of one act of conversion. You cannot truly trust Christ while clinging to the sin he died to destroy. As Mark 1:15 records Jesus' first words of public ministry: "Repent and believe in the gospel." The order is not accidental &mdash; turning from and turning to happen together.</p>
+        <p style="margin-top: 0.8rem;">Martin Luther understood this. His first of the Ninety-Five Theses reads: "When our Lord and Master Jesus Christ said 'Repent,' he intended that <strong>the entire life of believers</strong> should be one of repentance." Repentance is not a single event at conversion but an ongoing posture of the Christian life &mdash; a daily turning from self to God, from sin to grace.</p>
+      </div>
+      <div class="qa-topics"><span>Repentance</span><span>Sanctification</span></div>
+    </div>
+
+    <p class="bottom-note">The Berean examines a new question each day. Check back for more answers.</p>
 
   </main>
 
   <footer class="footer">
-    <p>Now these Jews were more noble than those in Thessalonica; they received the word with all eagerness, examining the Scriptures daily to see if these things were so. — Acts 17:11 (ESV)</p>
+    <p>Now these Jews were more noble than those in Thessalonica; they received the word with all eagerness, examining the Scriptures daily to see if these things were so. &mdash; Acts 17:11 (ESV)</p>
   </footer>
-
-  <!-- No JavaScript needed — this is a fully static page. The agent generates Q&A content during its daily cycle. -->
 
 </body>
 </html>

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Topical Studies — The Berean</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #0f0f13;
@@ -19,6 +19,7 @@
       --danger: #f55353;
       --success: #4ecb71;
       --mono: 'JetBrains Mono', 'Fira Code', monospace;
+      --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     }
 
     *, *::before, *::after {
@@ -30,8 +31,8 @@
     body {
       background: var(--bg);
       color: var(--text);
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      line-height: 1.7;
+      font-family: var(--sans);
+      line-height: 1.8;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -47,40 +48,33 @@
       text-decoration: underline;
     }
 
-    .header {
-      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-      padding: 2rem 1.5rem 1.5rem;
-      text-align: center;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .header h1 {
-      font-family: var(--mono);
-      font-size: 2rem;
-      font-weight: 600;
-      color: var(--text);
-      letter-spacing: 0.04em;
-      margin-bottom: 0.3rem;
-    }
-
-    .header .tagline {
-      font-style: italic;
-      color: var(--accent2);
-      font-size: 0.95rem;
-    }
-
+    /* Navigation */
     .nav {
       display: flex;
       justify-content: center;
+      align-items: center;
       gap: 2rem;
       padding: 0.9rem 1.5rem;
-      background: var(--bg);
+      background: var(--surface);
       border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .nav-brand {
+      font-family: var(--mono);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text) !important;
+      letter-spacing: 0.04em;
+      margin-right: 1rem;
     }
 
     .nav a {
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       font-weight: 500;
+      color: var(--muted);
     }
 
     .nav a.active {
@@ -89,58 +83,104 @@
       text-underline-offset: 4px;
     }
 
+    /* Page Header */
+    .page-header {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      padding: 3rem 1.5rem 2.5rem;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .page-header h1 {
+      font-family: var(--mono);
+      font-size: 2.2rem;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: 0.04em;
+      margin-bottom: 0.5rem;
+    }
+
+    .page-header .subtitle {
+      color: var(--muted);
+      font-size: 1rem;
+      font-style: italic;
+    }
+
+    /* Main Content */
     .container {
-      max-width: 760px;
+      max-width: 800px;
       margin: 0 auto;
-      padding: 2rem 1.5rem;
+      padding: 2.5rem 1.5rem;
       flex: 1;
       width: 100%;
     }
 
-    .page-title {
+    .section-header {
       font-family: var(--mono);
-      font-size: 1.6rem;
-      color: var(--text);
-      margin-bottom: 0.4rem;
-    }
-
-    .page-subtitle {
+      font-size: 0.85rem;
       color: var(--muted);
-      font-size: 0.92rem;
-      margin-bottom: 2rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 1.2rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
     }
 
-    .card {
+    /* Study Cards */
+    .study-card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 10px;
       padding: 2rem;
       margin-bottom: 1.5rem;
+      position: relative;
     }
 
-    .card h2 {
+    .study-card:nth-child(1) { border-left: 4px solid var(--accent2); }
+    .study-card:nth-child(2) { border-left: 4px solid var(--accent); }
+    .study-card:nth-child(3) { border-left: 4px solid var(--warn); }
+
+    .study-card h2 {
       font-family: var(--mono);
-      font-size: 1.15rem;
+      font-size: 1.1rem;
       color: var(--text);
-      margin-bottom: 0.8rem;
+      margin-bottom: 0.6rem;
+      padding-right: 6rem;
     }
 
-    .card p {
+    .study-card p {
       color: var(--muted);
       font-size: 0.92rem;
+      line-height: 1.8;
     }
 
-    .placeholder-text {
+    .study-tag {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--warn);
+      border: 1px solid var(--warn);
+      border-radius: 4px;
+      padding: 0.2rem 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      opacity: 0.8;
+    }
+
+    .study-sources {
+      font-family: var(--mono);
+      font-size: 0.75rem;
       color: var(--muted);
-      font-size: 0.9rem;
-      font-style: italic;
-      padding: 1.5rem 0;
-      text-align: center;
+      margin-top: 0.8rem;
+      opacity: 0.7;
     }
 
+    /* Footer */
     .footer {
       text-align: center;
-      padding: 2rem 1.5rem;
+      padding: 2.5rem 1.5rem;
       border-top: 1px solid var(--border);
       max-width: 640px;
       margin: 0 auto;
@@ -150,43 +190,65 @@
       color: var(--muted);
       font-size: 0.82rem;
       font-style: italic;
-      line-height: 1.6;
+      line-height: 1.7;
     }
 
     @media (max-width: 600px) {
-      .header h1 { font-size: 1.6rem; }
-      .card { padding: 1.4rem; }
-      .container { padding: 1.5rem 1rem; }
+      .page-header h1 { font-size: 1.7rem; }
+      .page-header { padding: 2.5rem 1.5rem 2rem; }
+      .study-card { padding: 1.4rem; }
+      .study-card h2 { padding-right: 0; margin-bottom: 0.4rem; }
+      .study-tag { position: static; display: inline-block; margin-bottom: 0.6rem; }
+      .container { padding: 2rem 1rem; }
+      .nav { gap: 1rem; flex-wrap: wrap; }
+      .nav-brand { margin-right: 0; width: 100%; text-align: center; }
     }
   </style>
 </head>
 <body>
 
-  <header class="header">
-    <h1><a href="index.html" style="color: inherit; text-decoration: none;">The Berean</a></h1>
-    <p class="tagline">"Examining the Scriptures daily" (Acts 17:11)</p>
-  </header>
-
   <nav class="nav">
+    <a href="index.html" class="nav-brand">The Berean</a>
     <a href="index.html">Home</a>
-    <a href="ask.html">Ask</a>
+    <a href="ask.html">Answers</a>
     <a href="devotional.html">Devotionals</a>
     <a href="studies.html" class="active">Studies</a>
   </nav>
 
+  <header class="page-header">
+    <h1>Topical Studies</h1>
+    <p class="subtitle">Deep explorations of Scripture, emerging from the questions you ask</p>
+  </header>
+
   <main class="container">
 
-    <h1 class="page-title">Topical Studies</h1>
-    <p class="page-subtitle">Deep explorations of Scripture by theme</p>
+    <h3 class="section-header">Upcoming Studies</h3>
 
-    <div class="card">
-      <p class="placeholder-text">The Berean is currently studying the Scriptures. Topical studies will appear here as themes emerge from your questions.</p>
+    <div class="study-card">
+      <span class="study-tag">Coming Soon</span>
+      <h2>The Prologue of John: Who is the Word?</h2>
+      <p>An in-depth study of John 1:1-18 &mdash; exploring the eternal Logos, his relationship to creation, and the stunning claim that God himself has pitched his tent in human flesh. Drawing on the Greek text and Old Testament echoes throughout the Prologue.</p>
+      <p class="study-sources">Based on: John 1:1-5, 1:6-13, 1:14-18, 1:19-28 devotionals</p>
+    </div>
+
+    <div class="study-card">
+      <span class="study-tag">Coming Soon</span>
+      <h2>Grace and Faith in the New Testament</h2>
+      <p>What does it mean that we are saved by grace through faith? A multi-passage study tracing the relationship between divine gift and human response from John 3:16 through Paul's letters &mdash; with careful attention to the original Greek terms.</p>
+      <p class="study-sources">Based on: John 3:16 Q&amp;A, upcoming Pauline devotionals</p>
+    </div>
+
+    <div class="study-card">
+      <span class="study-tag">Coming Soon</span>
+      <h2>Understanding Biblical Repentance</h2>
+      <p>From the Hebrew prophets' call to "return" to Jesus' opening command in Mark 1:15, this study traces the biblical theology of repentance &mdash; distinguishing true turning from mere remorse, and showing how repentance and faith work together in conversion and the Christian life.</p>
+      <p class="study-sources">Based on: Repentance Q&amp;A, upcoming devotionals</p>
     </div>
 
   </main>
 
   <footer class="footer">
-    <p>Now these Jews were more noble than those in Thessalonica; they received the word with all eagerness, examining the Scriptures daily to see if these things were so. — Acts 17:11 (ESV)</p>
+    <p>Now these Jews were more noble than those in Thessalonica; they received the word with all eagerness, examining the Scriptures daily to see if these things were so. &mdash; Acts 17:11 (ESV)</p>
   </footer>
 
 </body>

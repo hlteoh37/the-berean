@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Daily Devotionals — The Berean</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #0f0f13;
@@ -19,6 +19,7 @@
       --danger: #f55353;
       --success: #4ecb71;
       --mono: 'JetBrains Mono', 'Fira Code', monospace;
+      --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     }
 
     *, *::before, *::after {
@@ -30,8 +31,8 @@
     body {
       background: var(--bg);
       color: var(--text);
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      line-height: 1.7;
+      font-family: var(--sans);
+      line-height: 1.8;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -47,40 +48,33 @@
       text-decoration: underline;
     }
 
-    .header {
-      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-      padding: 2rem 1.5rem 1.5rem;
-      text-align: center;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .header h1 {
-      font-family: var(--mono);
-      font-size: 2rem;
-      font-weight: 600;
-      color: var(--text);
-      letter-spacing: 0.04em;
-      margin-bottom: 0.3rem;
-    }
-
-    .header .tagline {
-      font-style: italic;
-      color: var(--accent2);
-      font-size: 0.95rem;
-    }
-
+    /* Navigation */
     .nav {
       display: flex;
       justify-content: center;
+      align-items: center;
       gap: 2rem;
       padding: 0.9rem 1.5rem;
-      background: var(--bg);
+      background: var(--surface);
       border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .nav-brand {
+      font-family: var(--mono);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text) !important;
+      letter-spacing: 0.04em;
+      margin-right: 1rem;
     }
 
     .nav a {
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       font-weight: 500;
+      color: var(--muted);
     }
 
     .nav a.active {
@@ -89,87 +83,111 @@
       text-underline-offset: 4px;
     }
 
+    /* Page Header */
+    .page-header {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      padding: 3rem 1.5rem 2.5rem;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .page-header h1 {
+      font-family: var(--mono);
+      font-size: 2.2rem;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: 0.04em;
+      margin-bottom: 0.5rem;
+    }
+
+    .page-header .subtitle {
+      color: var(--muted);
+      font-size: 1rem;
+      font-style: italic;
+      margin-bottom: 1rem;
+    }
+
+    .current-book {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: var(--accent2);
+      border: 1px solid var(--accent2);
+      border-radius: 20px;
+      padding: 0.3rem 1rem;
+      opacity: 0.8;
+    }
+
+    /* Main Content */
     .container {
-      max-width: 760px;
+      max-width: 800px;
       margin: 0 auto;
-      padding: 2rem 1.5rem;
+      padding: 2.5rem 1.5rem;
       flex: 1;
       width: 100%;
     }
 
-    .page-title {
-      font-family: var(--mono);
-      font-size: 1.6rem;
-      color: var(--text);
-      margin-bottom: 0.4rem;
-    }
-
-    .page-subtitle {
-      color: var(--muted);
-      font-size: 0.92rem;
-      margin-bottom: 2rem;
-    }
-
-    .card {
+    /* Devotional Cards */
+    .devotional-card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 10px;
       padding: 2rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 2rem;
     }
 
-    .card h2 {
+    .devotional-card:nth-child(1) { border-left: 4px solid var(--accent2); }
+    .devotional-card:nth-child(2) { border-left: 4px solid var(--accent); }
+    .devotional-card:nth-child(3) { border-left: 4px solid var(--warn); }
+    .devotional-card:nth-child(4) { border-left: 4px solid var(--success); }
+
+    .devotional-meta {
       font-family: var(--mono);
-      font-size: 1.15rem;
-      color: var(--text);
-      margin-bottom: 0.8rem;
-    }
-
-    .card p {
-      color: var(--muted);
-      font-size: 0.92rem;
-    }
-
-    .devotional-date {
-      font-family: var(--mono);
-      font-size: 0.82rem;
+      font-size: 0.78rem;
       color: var(--accent);
-      margin-bottom: 0.4rem;
+      margin-bottom: 0.3rem;
+      display: flex;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+    }
+
+    .devotional-meta .reading-time {
+      color: var(--muted);
     }
 
     .devotional-passage {
       font-family: var(--mono);
-      font-size: 0.88rem;
+      font-size: 0.95rem;
       color: var(--accent2);
       margin-bottom: 1rem;
+      font-weight: 600;
     }
 
     .devotional-note {
       color: var(--text);
       font-size: 0.95rem;
-      margin-bottom: 1rem;
-      line-height: 1.8;
+      line-height: 1.85;
+      margin-bottom: 1.2rem;
+    }
+
+    .devotional-note em {
+      color: var(--accent2);
+      font-style: italic;
     }
 
     .devotional-reflection {
       color: var(--muted);
-      font-size: 0.9rem;
+      font-size: 0.92rem;
       font-style: italic;
       border-left: 3px solid var(--border);
       padding-left: 1rem;
+      line-height: 1.7;
     }
 
-    .placeholder-text {
-      color: var(--muted);
-      font-size: 0.9rem;
-      font-style: italic;
-      padding: 1.5rem 0;
-      text-align: center;
-    }
-
+    /* Footer */
     .footer {
       text-align: center;
-      padding: 2rem 1.5rem;
+      padding: 2.5rem 1.5rem;
       border-top: 1px solid var(--border);
       max-width: 640px;
       margin: 0 auto;
@@ -179,77 +197,85 @@
       color: var(--muted);
       font-size: 0.82rem;
       font-style: italic;
-      line-height: 1.6;
+      line-height: 1.7;
     }
 
     @media (max-width: 600px) {
-      .header h1 { font-size: 1.6rem; }
-      .card { padding: 1.4rem; }
-      .container { padding: 1.5rem 1rem; }
+      .page-header h1 { font-size: 1.7rem; }
+      .page-header { padding: 2.5rem 1.5rem 2rem; }
+      .devotional-card { padding: 1.4rem; }
+      .container { padding: 2rem 1rem; }
+      .nav { gap: 1rem; flex-wrap: wrap; }
+      .nav-brand { margin-right: 0; width: 100%; text-align: center; }
     }
   </style>
 </head>
 <body>
 
-  <header class="header">
-    <h1><a href="index.html" style="color: inherit; text-decoration: none;">The Berean</a></h1>
-    <p class="tagline">"Examining the Scriptures daily" (Acts 17:11)</p>
-  </header>
-
   <nav class="nav">
+    <a href="index.html" class="nav-brand">The Berean</a>
     <a href="index.html">Home</a>
-    <a href="ask.html">Ask</a>
+    <a href="ask.html">Answers</a>
     <a href="devotional.html" class="active">Devotionals</a>
     <a href="studies.html">Studies</a>
   </nav>
 
+  <header class="page-header">
+    <h1>Daily Devotionals</h1>
+    <p class="subtitle">Walking through the Gospel of John</p>
+    <span class="current-book">Currently in: The Gospel of John</span>
+  </header>
+
   <main class="container">
 
-    <h1 class="page-title">Daily Devotionals</h1>
-    <p class="page-subtitle">Walking through Scripture, one passage at a time</p>
-
-    <!-- Devotional entries will be inserted here -->
-    <!-- Each entry follows this structure:
-    <div class="card">
-      <p class="devotional-date">March 17, 2026</p>
-      <p class="devotional-passage">Genesis 1:1–5</p>
-      <p class="devotional-note">Exegetical note content here...</p>
-      <p class="devotional-reflection">Reflection content here...</p>
-    </div>
-    -->
-
-    <div class="card">
-      <p class="devotional-date">March 19, 2026</p>
-      <p class="devotional-passage">John 1:19–28 — The Voice</p>
-      <p class="devotional-note">Jerusalem sends a delegation: <em>Who are you?</em> John's answer is a triple negation — not the Christ, not Elijah, not the Prophet (vv. 20–21). Every title is refused. Then one claim: φωνὴ βοῶντος (<em>phōnē boōntos</em>, "a voice crying") — Isaiah 40:3. He is not the message; he is only the medium. Verse 27 sharpens it further: "the one coming after me, whose sandal strap I am not ἄξιος (<em>axios</em>, worthy) to untie." Untying sandals was slave's work. John will not claim even that dignity for himself.</p>
+    <!-- DEVOTIONAL: John 1:19-28 -->
+    <div class="devotional-card">
+      <div class="devotional-meta">
+        <span>March 19, 2026</span>
+        <span class="reading-time">2 min read</span>
+      </div>
+      <p class="devotional-passage">John 1:19-28 &mdash; The Voice</p>
+      <p class="devotional-note">Jerusalem sends a delegation: <em>Who are you?</em> John's answer is a triple negation &mdash; not the Christ, not Elijah, not the Prophet (vv. 20-21). Every title is refused. Then one claim: &#966;&#969;&#957;&#8052; &#946;&#959;&#8182;&#957;&#964;&#959;&#962; (<em>ph&#333;n&#275; bo&#333;ntos</em>, "a voice crying") &mdash; Isaiah 40:3. He is not the message; he is only the medium. Verse 27 sharpens it further: "the one coming after me, whose sandal strap I am not &#7940;&#958;&#953;&#959;&#962; (<em>axios</em>, worthy) to untie." Untying sandals was slave's work. John will not claim even that dignity for himself.</p>
       <p class="devotional-reflection">The greatest prophetic voice of his era spent it pointing entirely away from himself. True witness erases the witness.</p>
     </div>
 
-    <div class="card">
-      <p class="devotional-date">March 18, 2026</p>
-      <p class="devotional-passage">John 1:14–18 — The Tabernacling Word</p>
-      <p class="devotional-note">The Logos ἐσκήνωσεν (<em>eskēnōsen</em>) — "tabernacled" among us, pitching his tent in human flesh. The word echoes the Sinai tabernacle where God's glory descended (Exod. 40). John's χάριτος καὶ ἀληθείας (<em>charitos kai alētheias</em>, "grace and truth") deliberately mirrors Exodus 34:6 — the very character God proclaimed to Moses now becomes visible in a person. Verse 18 is stunning: the Son ἐξηγήσατο (<em>exēgēsato</em>) the Father — the verb from which we get "exegesis." Jesus is the divine exegete, the final word on who God is, speaking from the Father's κόλπον (<em>kolpon</em>, "bosom") — intimacy become revelation.</p>
-      <p class="devotional-reflection">No one has ever seen God — but his Son, who dwells in the Father's heart, has made him fully known. Christ is God's own self-interpretation.</p>
+    <!-- DEVOTIONAL: John 1:14-18 -->
+    <div class="devotional-card">
+      <div class="devotional-meta">
+        <span>March 18, 2026</span>
+        <span class="reading-time">2 min read</span>
+      </div>
+      <p class="devotional-passage">John 1:14-18 &mdash; The Tabernacling Word</p>
+      <p class="devotional-note">The Logos &#7952;&#963;&#954;&#942;&#957;&#969;&#963;&#949;&#957; (<em>esk&#275;n&#333;sen</em>) &mdash; "tabernacled" among us, pitching his tent in human flesh. The word echoes the Sinai tabernacle where God's glory descended (Exod. 40). John's &#967;&#940;&#961;&#953;&#964;&#959;&#962; &#954;&#945;&#8054; &#7936;&#955;&#951;&#952;&#949;&#943;&#945;&#962; (<em>charitos kai al&#275;theias</em>, "grace and truth") deliberately mirrors Exodus 34:6 &mdash; the very character God proclaimed to Moses now becomes visible in a person. Verse 18 is stunning: the Son &#7952;&#958;&#951;&#947;&#942;&#963;&#945;&#964;&#959; (<em>ex&#275;g&#275;sato</em>) the Father &mdash; the verb from which we get "exegesis." Jesus is the divine exegete, the final word on who God is, speaking from the Father's &#954;&#972;&#955;&#960;&#959;&#957; (<em>kolpon</em>, "bosom") &mdash; intimacy become revelation.</p>
+      <p class="devotional-reflection">No one has ever seen God &mdash; but his Son, who dwells in the Father's heart, has made him fully known. Christ is God's own self-interpretation.</p>
     </div>
 
-    <div class="card">
-      <p class="devotional-date">March 17, 2026</p>
-      <p class="devotional-passage">John 1:6–13 — The Witness and the Rejected Light</p>
-      <p class="devotional-note">John the Baptist enters as ἄνθρωπος ἀπεσταλμένος (<em>anthrōpos apestalmenos</em>), "a man sent" — explicitly not the Light, but a witness to it. The true Light (τὸ φῶς τὸ ἀληθινόν, v. 9) came into the world he made, yet "the world did not know him" — οὐκ ἔγνω, a sorrowful aorist verdict. Even his own people (οἱ ἴδιοι, <em>hoi idioi</em>, Israel) refused him. But to those who receive him, God grants ἐξουσία (<em>exousia</em>, "right/authority") to become children of God — born not of blood nor human will, but of God alone.</p>
+    <!-- DEVOTIONAL: John 1:6-13 -->
+    <div class="devotional-card">
+      <div class="devotional-meta">
+        <span>March 17, 2026</span>
+        <span class="reading-time">2 min read</span>
+      </div>
+      <p class="devotional-passage">John 1:6-13 &mdash; The Witness and the Rejected Light</p>
+      <p class="devotional-note">John the Baptist enters as &#7940;&#957;&#952;&#961;&#969;&#960;&#959;&#962; &#7936;&#960;&#949;&#963;&#964;&#945;&#955;&#956;&#941;&#957;&#959;&#962; (<em>anthr&#333;pos apestalmenos</em>), "a man sent" &mdash; explicitly not the Light, but a witness to it. The true Light (&#964;&#8056; &#966;&#8182;&#962; &#964;&#8056; &#7936;&#955;&#951;&#952;&#953;&#957;&#972;&#957;, v. 9) came into the world he made, yet "the world did not know him" &mdash; &#959;&#8016;&#954; &#7956;&#947;&#957;&#969;, a sorrowful aorist verdict. Even his own people (&#959;&#7985; &#7988;&#948;&#953;&#959;&#953;, <em>hoi idioi</em>, Israel) refused him. But to those who receive him, God grants &#7952;&#958;&#959;&#965;&#963;&#943;&#945; (<em>exousia</em>, "right/authority") to become children of God &mdash; born not of blood nor human will, but of God alone.</p>
       <p class="devotional-reflection">Rejection is the world's verdict on its Maker. But receiving him by faith crosses you from darkness into sonship.</p>
     </div>
 
-    <div class="card">
-      <p class="devotional-date">March 17, 2026</p>
-      <p class="devotional-passage">John 1:1–5 — The Word and the Light</p>
-      <p class="devotional-note">John opens with a deliberate echo of Genesis: "Ἐν ἀρχῇ" (<em>en archē</em>, "In the beginning"). The Word (λόγος, <em>logos</em>) was not created — the imperfect ἦν ("was") indicates eternal pre-existence, not origin. Three declarations establish his identity: present at creation, distinct from the Father, yet himself fully God (θεός without the article, stressing divine <em>nature</em>). Verse 3 leaves nothing outside his creative act. Then life enters the frame: ζωή (<em>zōē</em>) shines as the light of humanity, and the darkness has not overcome it — κατέλαβεν means both "comprehended" and "conquered." Both fail against the Word.</p>
-      <p class="devotional-reflection">All of creation, all of life, all of light flows from the eternal Word. The darkness cannot win — it never has.</p>
+    <!-- DEVOTIONAL: John 1:1-5 -->
+    <div class="devotional-card">
+      <div class="devotional-meta">
+        <span>March 17, 2026</span>
+        <span class="reading-time">2 min read</span>
+      </div>
+      <p class="devotional-passage">John 1:1-5 &mdash; The Word and the Light</p>
+      <p class="devotional-note">John opens with a deliberate echo of Genesis: "&#7960;&#957; &#7936;&#961;&#967;&#8135;" (<em>en arch&#275;</em>, "In the beginning"). The Word (&#955;&#972;&#947;&#959;&#962;, <em>logos</em>) was not created &mdash; the imperfect &#7974;&#957; ("was") indicates eternal pre-existence, not origin. Three declarations establish his identity: present at creation, distinct from the Father, yet himself fully God (&#952;&#949;&#972;&#962; without the article, stressing divine <em>nature</em>). Verse 3 leaves nothing outside his creative act. Then life enters the frame: &#950;&#969;&#942; (<em>z&#333;&#275;</em>) shines as the light of humanity, and the darkness has not overcome it &mdash; &#954;&#945;&#964;&#941;&#955;&#945;&#946;&#949;&#957; means both "comprehended" and "conquered." Both fail against the Word.</p>
+      <p class="devotional-reflection">All of creation, all of life, all of light flows from the eternal Word. The darkness cannot win &mdash; it never has.</p>
     </div>
 
   </main>
 
   <footer class="footer">
-    <p>Now these Jews were more noble than those in Thessalonica; they received the word with all eagerness, examining the Scriptures daily to see if these things were so. — Acts 17:11 (ESV)</p>
+    <p>Now these Jews were more noble than those in Thessalonica; they received the word with all eagerness, examining the Scriptures daily to see if these things were so. &mdash; Acts 17:11 (ESV)</p>
   </footer>
 
 </body>
