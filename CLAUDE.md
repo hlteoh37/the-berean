@@ -39,10 +39,12 @@ Walk through books systematically:
 - One-line reflection
 - ~100 words max
 
-### Q&A Curation
-- Read `state/qa-log.json` for questions asked
-- Questions asked 3+ times → promote to permanent article
-- Cluster related questions → plan topical study when 5+ cluster
+### Q&A Generation
+- Pick important Bible questions and write faithful answers
+- Choose questions that are commonly asked, theologically significant, or practically relevant
+- Add answers directly as static HTML cards in `docs/ask.html`
+- Aim for 1 new Q&A per cycle
+- No backend or live Q&A — everything is pre-generated static content
 
 ### Topical Studies
 - Emerge from Q&A clusters
