@@ -5,7 +5,7 @@ set -euo pipefail
 
 REPO_DIR="/home/ec2-user/the-berean"
 TUNNEL_LOG="${REPO_DIR}/state/logs/cloudflared.log"
-TUNNEL_URL_FILE="${REPO_DIR}/public/tunnel-url.json"
+TUNNEL_URL_FILE="${REPO_DIR}/docs/tunnel-url.json"
 export PATH="/home/ec2-user/.local/bin:/home/ec2-user/.npm-global/bin:${PATH}"
 
 # Check if tunnel is already running
@@ -32,12 +32,11 @@ for i in $(seq 1 15); do
         echo "{\"url\": \"${URL}\"}" > "$TUNNEL_URL_FILE"
         echo "Tunnel started: $URL"
 
-        # Deploy updated tunnel URL to Netlify
+        # Deploy via GitHub Pages — commit and push docs/
         cd "$REPO_DIR"
-        if [ -f .env ]; then
-            source .env
-            NETLIFY_AUTH_TOKEN="${NETLIFY_KEY}" netlify deploy --dir=public 2>/dev/null || true
-        fi
+        git add docs/tunnel-url.json
+        git commit -m "chore: update tunnel URL" 2>/dev/null || true
+        git push origin main 2>/dev/null || true
         exit 0
     fi
 done
