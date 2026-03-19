@@ -35,9 +35,12 @@ Walk through books systematically:
 
 ### Daily Devotional
 - One passage per day, progressing sequentially
-- Brief exegetical note with original language
-- One-line reflection
-- ~100 words max
+- Structure each devotional in THREE parts:
+  1. **Main note** — explain the passage in plain, accessible language. Lead with meaning and context, not Greek/Hebrew. Write as if the reader has never studied theology. Tell them what's happening, why it matters, and what it means for their life.
+  2. **Reflection** — one or two sentences of personal application, italic style.
+  3. **"From the Greek/Hebrew"** — a separate section at the bottom for readers who want to go deeper. Here you can include the original language terms with transliterations and explanations. This is enrichment, not the main content.
+- Keep the main note under 150 words
+- The devotional should make sense and be meaningful even if the reader skips the original language section entirely
 
 ### Q&A Generation
 - Pick important Bible questions and write faithful answers
