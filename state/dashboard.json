@@ -1,13 +1,27 @@
 {
   "name": "The Berean",
-  "status": "LAUNCHING",
-  "days_active": 0,
-  "devotionals_written": 0,
-  "questions_answered": 0,
+  "status": "ACTIVE",
+  "days_active": 4,
+  "devotionals_written": 5,
+  "questions_answered": 3,
   "studies_published": 0,
   "current_book": "John",
   "current_chapter": 1,
-  "current_passage": "John 1:1-5",
-  "last_cycle": null,
-  "netlify_preview_url": null
+  "current_passage": "John 1:29-34",
+  "next_passage": "John 1:35-42",
+  "last_cycle": "2026-03-20",
+  "netlify_preview_url": null,
+  "site_url": "https://hlteoh37.github.io/the-berean/",
+  "devotionals": [
+    {"date": "2026-03-17", "passage": "John 1:1-5", "title": "Before Everything, the Word"},
+    {"date": "2026-03-17", "passage": "John 1:6-13", "title": "The Light the World Refused"},
+    {"date": "2026-03-18", "passage": "John 1:14-18", "title": "God Moved In"},
+    {"date": "2026-03-19", "passage": "John 1:19-28", "title": "The Voice"},
+    {"date": "2026-03-20", "passage": "John 1:29-34", "title": "The Lamb of God"}
+  ],
+  "qa_log": [
+    {"question": "What does John 3:16 mean?", "topics": ["Gospel", "Salvation"]},
+    {"question": "What is repentance?", "topics": ["Repentance", "Sanctification"]},
+    {"question": "What does it mean that Jesus is the Lamb of God?", "topics": ["Atonement", "Gospel"]}
+  ]
 }
